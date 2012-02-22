@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require "s3stream"
+S3Stream::Main.start

@@ -1,0 +1,28 @@
+Installation
+============
+
+    gem install s3stream
+
+Configuration
+=============
+
+  export AMAZON_ACCESS_KEY_ID='abcdefghijklmnop'
+  export AMAZON_SECRET_ACCESS_KEY='1234567891012345'
+
+Usage
+=====
+From the command line:
+
+    % s3stream fetch mybucket myfile.dat > /tmp/myfile.dat
+    % s3stream store mybucket myfile.dat < /tmp/myfile.dat
+
+And if you want to get fancy:
+
+    % cat <(s3stream fetch mybucket log0.log.gz | gunzip) <(s3stream fetch mybucket log1.log.gz | gunzip) | gzip > s3stream store mybucket combined.log.gz
+
+
+Development
+===========
+    gem install bundler
+    bundle install
+    guard
