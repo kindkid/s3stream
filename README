@@ -6,23 +6,33 @@ Installation
 Configuration
 =============
 
-  export AMAZON_ACCESS_KEY_ID='abcdefghijklmnop'
-  export AMAZON_SECRET_ACCESS_KEY='1234567891012345'
+Log into Amazon Web Services, and lookup your access key ID and secret.
+https://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key
+
+Here, I'll pretend that your access key is "ABCDEFGHIJKLMNOPQ" and your secret
+is "12345678901234567890abcde". Alright then...
+
+    % echo 'AWSAccessKeyId=ABCDEFGHIJKLMNOPQ' > ~/.aws-credentials
+    % echo 'AWSSecretKey=12345678901234567890abcde' >> ~/.aws-credentials
+    % export AWS_CREDENTIAL_FILE=~/.aws-credentials
+
+  - OR -
+
+    % export AMAZON_ACCESS_KEY_ID='ABCDEFGHIJKLMNOPQ'
+    % export AMAZON_SECRET_ACCESS_KEY='12345678901234567890abcde'
+
+  - OR -
+
+    % export AWS_ACCESS_KEY='ABCDEFGHIJKLMNOPQ'
+    % export AWS_SECRET_KEY='12345678901234567890abcde'
+
 
 Usage
 =====
-From the command line:
 
     % s3stream fetch mybucket myfile.dat > /tmp/myfile.dat
     % s3stream store mybucket myfile.dat < /tmp/myfile.dat
 
 And if you want to get fancy:
 
-    % cat <(s3stream fetch mybucket log0.log.gz | gunzip) <(s3stream fetch mybucket log1.log.gz | gunzip) | gzip > s3stream store mybucket combined.log.gz
-
-
-Development
-===========
-    gem install bundler
-    bundle install
-    guard
+    % cat <(s3stream fetch mybucket log0.log.gz | gunzip) <(s3stream fetch mybucket log1.log.gz | gunzip) | lzop -9 | s3stream store mybucket combined.log.lzo
