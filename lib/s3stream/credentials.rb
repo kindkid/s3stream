@@ -6,7 +6,7 @@ module S3Stream
     access_key_id, secret_access_key = nil
 
     # Try AWS tools' standard way
-    if File.file?(ENV['AWS_CREDENTIAL_FILE'])
+    if ENV['AWS_CREDENTIAL_FILE'] && File.file?(ENV['AWS_CREDENTIAL_FILE'])
       File.open(ENV['AWS_CREDENTIAL_FILE']) do |f|
         f.lines.each do |line|
           access_key_id = $1 if line =~ /^AWSAccessKeyId=(.*)$/
