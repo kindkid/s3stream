@@ -1,7 +1,7 @@
 Installation
 ============
 
-    gem install s3stream
+    gem install s3stream --development
 
 Configuration
 =============
