@@ -35,4 +35,8 @@ Usage
 
 And if you want to get fancy:
 
-    % cat <(s3stream fetch mybucket log0.log.gz | gunzip) <(s3stream fetch mybucket log1.log.gz | gunzip) | lzop -9 | s3stream store mybucket combined.log.lzo
+    % cat \
+      <(s3stream fetch mybucket log0.log.gz | gunzip) \
+      <(s3stream fetch mybucket log1.log.gz | gunzip) \
+      | lzop -9 \
+      | s3stream store mybucket combined.log.lzo
