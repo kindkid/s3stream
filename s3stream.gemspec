@@ -19,9 +19,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency "thor", "~> 0.14.6"
-  s.add_development_dependency "aws-sdk", "~> 1.3.5" #actually a runtime dependency
-  s.add_development_dependency "aws-s3", "~> 0.6.2"  #actually a runtime dependency
-  # s.add_development_dependency "pry"
-  # s.add_development_dependency "pry-doc"
-  # s.add_development_dependency "pry-nav"
+  s.add_runtime_dependency "aws-sdk", "~> 1.3.5"
+  s.add_development_dependency "pry"
+  s.add_development_dependency "pry-doc"
+  s.add_development_dependency "pry-nav"
 end

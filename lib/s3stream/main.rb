@@ -2,20 +2,22 @@ module S3Stream
   class Main < Thor
     desc "fetch bucket filename", "download/stream the file from S3 to stdout"
     def fetch(bucket_name, filename)
-      require "aws/s3"
-      AWS::S3::Base.establish_connection!(S3Stream::CREDENTIALS)
-      AWS::S3::S3Object.stream(filename, bucket_name) do |chunk|
-        $stdout.write chunk
+      require 'open-uri'
+      object = s3object(bucket_name, filename)
+      uri = object.url_for(:read, :secure => true, :expires => 60 * 60) # 1 hour
+      uri.open do |stream|
+        buffer = ""
+        until stream.eof?
+          stream.readpartial(4096, buffer)
+          $stdout.write(buffer)
+        end
       end
     end
     
     desc "store bucket filename", "upload/stream the file from stdin to S3"
     def store(bucket_name, filename)
-      require "aws-sdk"
       $stdout.sync = true
-      s3 = AWS::S3.new(S3Stream::CREDENTIALS)
-      bucket = s3.buckets[bucket_name]
-      object = bucket.objects[filename]
+      object = s3object(bucket_name, filename)
       buffer = ""
       total = 0
       buffer_size = INITIAL_BUFFER_SIZE
@@ -46,6 +48,17 @@ module S3Stream
         end
       end
       puts "Done uploading to s3://#{bucket_name}/#{filename} (#{total} bytes)"
+    end
+
+    private
+
+    def s3
+      @s3 ||= AWS::S3.new(S3Stream::CREDENTIALS)
+    end
+
+    def s3object(bucket_name, key)
+      bucket = s3.buckets[bucket_name]
+      bucket.objects[key]
     end
   end
 end

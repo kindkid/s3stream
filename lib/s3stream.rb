@@ -1,4 +1,5 @@
 require "thor"
+require "aws-sdk"
 require "s3stream/version"
 require "s3stream/constants"
 require "s3stream/main"
