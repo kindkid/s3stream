@@ -35,7 +35,9 @@ Usage
 
 If you want to try uploading a bunch of data, but don't have any handy:
 
-    % base64 /dev/urandom | head -c $((10 * 1024 * 1024)) | s3stream store mybucket 10mb.txt
+    % base64 /dev/urandom \
+      | head -c $((10 * 1024 * 1024)) \
+      | s3stream store mybucket 10mb.txt
 
 And if you want to get fancy:
 
