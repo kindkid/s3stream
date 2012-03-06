@@ -14,6 +14,7 @@ module S3Stream
         stream.cancel
         raise
       end
+      stream.size
     end
 
     attr_reader :size
