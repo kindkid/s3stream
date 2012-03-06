@@ -1,4 +1,11 @@
 #!/usr/bin/env ruby
 
 require "s3stream"
+
+if S3Stream::CREDENTIALS.nil?
+  puts "Environmental variables must be set."
+  puts "See https://github.com/kindkid/s3stream/blob/v#{S3Stream::VERSION}/README"
+  exit(1)
+end
+
 S3Stream::Main.start
